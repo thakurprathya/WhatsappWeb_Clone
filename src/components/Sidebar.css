@@ -1,0 +1,48 @@
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    flex: 0.35;  /*making it take the the neccessary space*/
+}
+.sidebar__header{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    border-right: 1px solid lightgray;
+}
+.sidebar__headerRight{
+    min-width: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.sidebar__headerRight > .MuiSvgIcon-root{  /*targeting the svg icon inside headerright*/
+    margin-right: 2vw;
+    font-size: 24px !important;
+}
+.sidebar__search{
+    height: 39px;
+    padding: 10px;
+    background-color: #f6f6f6;
+    display: flex;
+    align-items: center;
+}
+.sidebar__searchContainer{
+    width: 100%; height: 35px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+}
+.sidebar__searchContainer > input{ /*targeting the input tag inside container*/
+    margin-left: 10px;
+    border: none;
+}
+.sidebar__searchContainer > .MuiSvgIcon-root{  /*targeting the svg icon inside container*/
+    color: gray;  
+    padding: 10px;
+}
+.sidebar__chats{
+    flex: 1; /*as flex direction was currently column it will take entire space in .sidebarchats*/
+    background-color: white;
+    overflow: scroll;
+}
