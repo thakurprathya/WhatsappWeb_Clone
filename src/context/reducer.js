@@ -1,6 +1,6 @@
 export const initialState = {  //this is the initial state (how the data looks initially)
-    user: "null", //this is a simple trick which help in prevent reloginin on reloading site good for production but comment it
-    // user: null,
+    // user: "null", //this is a simple trick which help in prevent reloginin on reloading site good for production but comment it
+    user: null,
     uid: null,
     togglerState: 1,
     photoURL: "",
