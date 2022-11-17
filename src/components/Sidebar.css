@@ -37,6 +37,10 @@
     margin-left: 10px;
     border: none;
 }
+.sidebar__searchContainer > input:focus {
+    border: none;
+    outline: none;
+}
 .sidebar__searchContainer > .MuiSvgIcon-root{  /*targeting the svg icon inside container*/
     color: gray;  
     padding: 10px;
@@ -45,4 +49,25 @@
     flex: 1; /*as flex direction was currently column it will take entire space in .sidebarchats*/
     background-color: white;
     overflow: scroll;
+}
+.logout{
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    width: 5vw;
+    height: 3.2vh;
+    min-width: 50px;
+    position: absolute;
+    font-weight: bold;
+    font-size:small;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+.sidebar__headerRight > .vertbutton:hover > .logout{
+    display: block;
+}
+
+@media(max-width:655px) {
+    .sidebar{ flex: 1;}
 }

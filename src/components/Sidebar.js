@@ -10,9 +10,10 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import db from '../firebase'; //importing database from local firebase
 import { useStateValue } from '../context/StateProvider';
 
-function Sidebar() {
+function Sidebar({display}) {
     const [rooms, setRooms]= useState([]); //creating an state initialized with empty array to store all the room info fetched from database
-    const [{user}, dispatch]= useStateValue(); //pulling the user from datalayer, will use it to setup avatar
+    const [{user}]= useStateValue(); //pulling the user from datalayer, will use it to setup avatar
+
     useEffect(()=>{ //onsnapshot on rooms means taking pic of that collection & also is linked with changes to that picture, on making changes another snapshot is taken
         const connection= db.collection("rooms").onSnapshot(snapshot=>(
             setRooms(snapshot.docs.map(doc =>(  //docs refers to list of elements in the database, and mapping to each element and returning an object
@@ -27,29 +28,66 @@ function Sidebar() {
         }
     },[]); //it will run onlyonce everytime sidebar comp is loaded
 
+    const logout= ()=>{ window.location= '/'; }
     return (
-        <div className='sidebar'>
-            <div className="sidebar__header">
-                <Avatar src={user?.photoURL}/> {/*if user defined fetching its photo from google */}
-                <div className="sidebar__headerRight">
-                    <IconButton><DonutLargeIcon /></IconButton>
-                    <IconButton><ChatIcon /></IconButton>
-                    <IconButton><MoreVertIcon /></IconButton>
+        (window.screen.width > 655)?(
+            <div className='sidebar'>
+                <div className="sidebar__header">
+                    <Avatar src={user?.photoURL}/> {/*if user defined fetching its photo from google */}
+                    <div className="sidebar__headerRight">
+                        <IconButton><DonutLargeIcon /></IconButton>
+                        <IconButton><ChatIcon /></IconButton>
+                        <div className="vertbutton">
+                            <IconButton><MoreVertIcon /></IconButton>
+                            <div className='logout' onClick={logout}>LogOut</div>
+                        </div>
+                    </div>
+                </div>
+                <div className="sidebar__search">
+                    <div className="sidebar__searchContainer">
+                        <SearchOutlinedIcon />
+                        <input type="text" placeholder='Search or Start new chat' />
+                    </div>
+                </div>
+                <div className="sidebar__chats">
+                    <SidebarChat addNewChat/>  {/*will render add new chat box instead of chatbox*/}
+                    {rooms.map((room)=>( 
+                        <SidebarChat key={room.id} id={room.id} name={room.data.name}/>
+                    ))}  {/*will render all the chat boxes, as for every room we're calling the component*/}
                 </div>
             </div>
-            <div className="sidebar__search">
-                <div className="sidebar__searchContainer">
-                    <SearchOutlinedIcon />
-                    <input type="text" placeholder='Search or Start new chat' />
+        ):(
+            (display === "flex")?(
+                <div className='sidebar'>
+                    <div className="sidebar__header">
+                        <Avatar src={user?.photoURL}/> {/*if user defined fetching its photo from google */}
+                        <div className="sidebar__headerRight">
+                            <IconButton><DonutLargeIcon /></IconButton>
+                            <IconButton><ChatIcon /></IconButton>
+                            <div className="vertbutton">
+                                <IconButton><MoreVertIcon /></IconButton>
+                                <div className='logout' onClick={logout}>LogOut</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="sidebar__search">
+                        <div className="sidebar__searchContainer">
+                            <SearchOutlinedIcon />
+                            <input type="text" placeholder='Search or Start new chat' />
+                        </div>
+                    </div>
+                    <div className="sidebar__chats">
+                        <SidebarChat addNewChat/>  {/*will render add new chat box instead of chatbox*/}
+                        {rooms.map((room)=>( 
+                            <SidebarChat key={room.id} id={room.id} name={room.data.name}/>
+                        ))}  {/*will render all the chat boxes, as for every room we're calling the component*/}
+                    </div>
                 </div>
-            </div>
-            <div className="sidebar__chats">
-                <SidebarChat addNewChat/>  {/*will render add new chat box instead of chatbox*/}
-                {rooms.map((room)=>( 
-                    <SidebarChat key={room.id} id={room.id} name={room.data.name}/>
-                ))}  {/*will render all the chat boxes, as for every room we're calling the component*/}
-            </div>
-        </div>
+            ):(
+                <></>
+            ) 
+        )
+        
     );
 };
 

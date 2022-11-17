@@ -7,6 +7,7 @@ import { actionTypes } from '../context/reducer';
 
 const Login = () => {
     //pulling the data from data layer (context api), calling our created hook, we can destructure the data by entering the particular value into curly braces but pulling whole layer
+    // eslint-disable-next-line
     const [{}, dispatch]= useStateValue();  //dispatch will used to update the data layer
     const signIn =()=>{  //creating a singin function with firebase (google authentication)
         auth.signInWithPopup(provider)  //this is the basic main command for authentication

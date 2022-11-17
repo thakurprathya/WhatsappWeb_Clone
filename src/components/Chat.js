@@ -18,14 +18,14 @@ import 'firebase/compat/firestore';
 
 function Chat() {
     const [input, setInput]= useState('');  //creating an empty state to store the input message in the form input(footer)
-    const [seed, setSeed]= useState('');  //creating an empty state to be used for generating random avatar from the site
+    // const [seed, setSeed]= useState('');  //creating an empty state to be used for generating random avatar from the site
     const {roomId}= useParams();  //will going to use this hook to grab the link after /rooms/ to get room id (** name of var should match the wildcard entered in route of path)
     const [roomName, setRoomName]= useState('');  //creating a empty state to contain the info of current chatroom we're in
     const [messages, setMessages]= useState([]); //creating a state to store messages from a chat room, in db we created another collection messages inside chatrooms to store chat.
-    const [{user}, dispatch]= useStateValue(); //pulling the user from datalayer
+    const [{user}]= useStateValue(); //pulling the user from datalayer
 
     useEffect(()=>{
-        setSeed(Math.floor(Math.random() * 5000));  //generating a random no.
+        // setSeed(Math.floor(Math.random() * 5000));  //generating a random no.
         if(roomId){  //if roomId exists
             db.collection('rooms').doc(roomId).onSnapshot(snapshot=>(  //checking the particular doc with that id in collection rooms
                 setRoomName(snapshot.data().name)  //updating roomname to name in the database 
@@ -51,11 +51,12 @@ function Chat() {
     return (
         <div className='chat'>
             <div className="chat__header">
-                <Avatar src={`https://avatars.dicebear.com/api/bottts/${seed}.svg`} />
+                {/* <Avatar src={`https://avatars.dicebear.com/api/bottts/${seed}.svg`} /> */}
+                <Avatar src={window.localStorage.getItem(`chatAvatar${roomId}`)} />
                 <div className="chat__headerInfo">
                     <h3>{roomName}</h3>
                     <p>  {/*will be retrieving it from the last chat of that room */}
-                        {new Date( messages[messages.length-1]?.timestamp?.toDate() ).toUTCString() }
+                        {new Date( messages[messages.length-1]?.timestamp?.toDate() ).toString().slice(0, 33) } {/*use toUTC string to get standard time worldwide */}
                     </p>
                 </div>
                 <div className="chat__headerRight">
@@ -71,7 +72,7 @@ function Chat() {
                         <span className="chat__name">{message.name}</span>
                         {message.message}
                         <span className="chat__timestamp">
-                            {new Date(message.timestamp?.toDate()).toUTCString()} {/*converting timestamp to our required format */}
+                            {new Date(message.timestamp?.toDate()).toString().slice(0, 25)} {/*converting timestamp to our required format */}
                         </span>
                     </p>
                 ))}
