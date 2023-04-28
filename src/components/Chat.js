@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import './Chat.css';
 import { Avatar } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -16,7 +16,7 @@ import firebase from 'firebase/compat/app';  //importing firebase
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
-function Chat() {
+function Chat({screenWidth}) {
     const [input, setInput]= useState('');  //creating an empty state to store the input message in the form input(footer)
     // const [seed, setSeed]= useState('');  //creating an empty state to be used for generating random avatar from the site
     const {roomId}= useParams();  //will going to use this hook to grab the link after /rooms/ to get room id (** name of var should match the wildcard entered in route of path)
@@ -48,44 +48,53 @@ function Chat() {
         setInput("");  //everytime after submiting the button setting input to empty string
     }
 
+    const location = useLocation();
+    const [pathname, setPathname] = useState(location.pathname);
+    useEffect(() => {
+        setPathname(location.pathname);
+    }, [location]);
+
     return (
-        <div className='chat'>
-            <div className="chat__header">
-                {/* <Avatar src={`https://avatars.dicebear.com/api/bottts/${seed}.svg`} /> */}
-                <Avatar src={window.localStorage.getItem(`chatAvatar${roomId}`)} />
-                <div className="chat__headerInfo">
-                    <h3>{roomName}</h3>
-                    <p>  {/*will be retrieving it from the last chat of that room */}
-                        {new Date( messages[messages.length-1]?.timestamp?.toDate() ).toString().slice(0, 33) } {/*use toUTC string to get standard time worldwide */}
-                    </p>
+        (screenWidth > 655 || (screenWidth <=655 && pathname === `/rooms/${roomId}`))?
+            <div className='chat'>
+                <div className="chat__header">
+                    {/* <Avatar src={`https://avatars.dicebear.com/api/bottts/${seed}.svg`} /> */}
+                    <Avatar src={window.localStorage.getItem(`chatAvatar${roomId}`)} />
+                    <div className="chat__headerInfo">
+                        <h3>{roomName}</h3>
+                        <p>  {/*will be retrieving it from the last chat of that room */}
+                            {new Date( messages[messages.length-1]?.timestamp?.toDate() ).toString().slice(0, 33) } {/*use toUTC string to get standard time worldwide */}
+                        </p>
+                    </div>
+                    <div className="chat__headerRight">
+                        <IconButton><SearchOutlinedIcon /></IconButton>
+                        <IconButton><AttachFileIcon /></IconButton>
+                        <IconButton><MoreVertIcon /></IconButton>
+                    </div>
                 </div>
-                <div className="chat__headerRight">
-                    <IconButton><SearchOutlinedIcon /></IconButton>
-                    <IconButton><AttachFileIcon /></IconButton>
-                    <IconButton><MoreVertIcon /></IconButton>
+                <div className="chat__body">
+                    {messages.map(message=>(  //traversing each message
+                        <p className={`chat__message ${message.name === user.displayName && "chat__reciever"}`}>
+        {/*if message name = google name then will show green layout send by us layout else white layout, but this will raise error for persons with same name so it would be better if linked this command with ids rather than just names */}
+                            <span className="chat__name">{message.name}</span>
+                            {message.message}
+                            <span className="chat__timestamp">
+                                {new Date(message.timestamp?.toDate()).toString().slice(0, 25)} {/*converting timestamp to our required format */}
+                            </span>
+                        </p>
+                    ))}
+                </div>
+                <div className="chat__footer">
+                    <IconButton><InsertEmoticon /></IconButton>
+                    <form >
+                        <input type="text" placeholder='Type a Message' value={input} onChange={e=>setInput(e.target.value)}/>  {/*updating the state everytime input changes */}
+                        <button type='submit' onClick={sendMessage}><SendIcon/></button> {/*sendmessage will be triggerd on enter */}
+                    </form>
+                    <IconButton><MicIcon /></IconButton>
                 </div>
             </div>
-            <div className="chat__body">
-                {messages.map(message=>(  //traversing each message
-                    <p className={`chat__message ${message.name === user.displayName && "chat__reciever"}`}>
-    {/*if message name = google name then will show green layout send by us layout else white layout, but this will raise error for persons with same name so it would be better if linked this command with ids rather than just names */}
-                        <span className="chat__name">{message.name}</span>
-                        {message.message}
-                        <span className="chat__timestamp">
-                            {new Date(message.timestamp?.toDate()).toString().slice(0, 25)} {/*converting timestamp to our required format */}
-                        </span>
-                    </p>
-                ))}
-            </div>
-            <div className="chat__footer">
-                <IconButton><InsertEmoticon /></IconButton>
-                <form >
-                    <input type="text" placeholder='Type a Message' value={input} onChange={e=>setInput(e.target.value)}/>  {/*updating the state everytime input changes */}
-                    <button type='submit' onClick={sendMessage}><SendIcon/></button> {/*sendmessage will be triggerd on enter */}
-                </form>
-                <IconButton><MicIcon /></IconButton>
-            </div>
-        </div>
+        :
+            <></>
     );
 };
 

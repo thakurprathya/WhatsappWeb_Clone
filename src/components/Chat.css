@@ -1,11 +1,19 @@
 .chat{
     flex: 0.65;  /*making it take the remaining space as 0.35 we alloted to sidebar*/
-    display: flex;
+    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: -webkit-flexbox; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
     flex-direction: column;
 }
 
 .chat__header{
-    display: flex;
+    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: -webkit-flexbox; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
     align-items: center;
     padding: 20px;
     border-bottom: 1px solid lightgray;
@@ -23,7 +31,11 @@
 }
 .chat__headerRight{
     min-width: 100px;
-    display: flex;
+    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: -webkit-flexbox; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
     justify-content: space-between;
 }
 
@@ -64,7 +76,11 @@
 }
 .chat > a { color: rgb(49 91 188) !important; }  /*for displaying links*/
 .chat__footer {
-    display: flex;
+    display: -webkit-box;   /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: -webkit-flexbox; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
     position: relative;
     justify-content: space-between;
     align-items: center;
@@ -90,5 +106,5 @@
 .chat__footer > .MuiSvgIcon-root {  padding: 7px; color: gray; } /*targetting svg inside footer*/
 
 @media(max-width:655px) {
-    .chat{ flex: 1;}
+    .chat{ flex: 1; }
 }
