@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Login.css'
 import Button from '@mui/material/Button';
 import { auth, provider } from '../firebase';
@@ -26,6 +26,12 @@ const Login = () => {
         })
         .catch((err) => alert(err.message));
     };
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            alert(`This app uses Firebase Google Authentication to allow users login using there google account, and use account's display name & picture to create user specific experience.`);
+        },500);
+    },[]);
 
     return (
         <div className="login">

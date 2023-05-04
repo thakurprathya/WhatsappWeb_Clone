@@ -59,8 +59,8 @@ function Sidebar({display, screenWidth}) {
                 </div>
                 <div className="sidebar__chats">
                     <SidebarChat addNewChat/>  {/*will render add new chat box instead of chatbox*/}
-                    {rooms.map((room)=>( 
-                        <SidebarChat key={room.data.name+room.id} id={room.id} name={room.data.name}/>
+                    {rooms.map((room)=>(
+                        <SidebarChat key={room.id} id={room.id} name={room.data.name}/>
                     ))}  {/*will render all the chat boxes, as for every room we're calling the component*/}
                 </div>
             </div>
