@@ -76,10 +76,8 @@
     cursor: pointer;
     background-color: white;
     color: black;
-    position: absolute;
+    position: relative;
     z-index: 10;
-    top: 3.3rem;
-    right: .5rem;
     font-weight: bold;
     font-size:small;
     border-radius: 5px;
@@ -87,7 +85,7 @@
     display: none;
 }
 .sidebar__headerRight > .vertbutton:hover > .logout{
-    display: block;
+    display: inline-block;
 }
 
 @media(max-width:655px) {
