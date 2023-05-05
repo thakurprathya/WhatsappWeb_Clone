@@ -71,13 +71,15 @@
     overflow: scroll;
 }
 .logout{
+    padding: 1rem;
+    border: 2px solid rgb(219, 216, 216);
     cursor: pointer;
     background-color: white;
     color: black;
-    width: 5vw;
-    height: 3.2vh;
-    min-width: 50px;
     position: absolute;
+    z-index: 10;
+    top: 3.3rem;
+    right: .5rem;
     font-weight: bold;
     font-size:small;
     border-radius: 5px;

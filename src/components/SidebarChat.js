@@ -64,11 +64,13 @@ const SidebarChat = ({id, name, addNewChat}) => {
     return !addNewChat ? (  //going to return depending upon prop addnewchat present or not
         <Link to={`/rooms/${id}`}>  {/*changing the link on clicking any chat, as it made everychat option a link to that chat*/}
             <div className='sidebarChat'>
-                {/* <Avatar src={`https://avatars.dicebear.com/api/bottts/${seed}.svg`}/> */}
-                <Avatar src={window.localStorage.getItem(`chatAvatar${id}`)} />
-                <div className="sidebarChat__info">
-                    <h2>{name}</h2>  {/*using the prop */}
-                    <p>{messages[0]?.message}</p> {/*pulling this message from our state which contain all the messages of that chat room, as we order messages by des first message will be last one  */}
+                <div className='sidebarHead'>
+                    {/* <Avatar src={`https://avatars.dicebear.com/api/bottts/${seed}.svg`}/> */}
+                    <Avatar src={window.localStorage.getItem(`chatAvatar${id}`)} />
+                    <div className="sidebarChat__info">
+                        <h2>{name}</h2>  {/*using the prop */}
+                        <p>{messages[0]?.message.slice(0, 35) + (messages[0]?.message.length > 35 ? "..." : "")}</p> {/*pulling this message from our state which contain all the messages of that chat room, as we order messages by des first message will be last one  */}
+                    </div>
                 </div>
                 <div className="sidebarChat__delete" onClick={deleteChat}><DeleteForeverIcon/></div>
             </div>

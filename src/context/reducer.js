@@ -21,9 +21,6 @@ const reducer = (state, action) => {  //when action get dispatched into data lay
           user: action.user,  //changing the user to dispatched user
         };
       case actionTypes.SET_SESSION:
-        localStorage.setItem("uid", action.uid);
-        localStorage.setItem("displayName", action.displayName);
-        localStorage.setItem("photoURL", action.photoURL);
         console.log("session added to storage");
         return {
           ...state,

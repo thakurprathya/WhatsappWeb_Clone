@@ -9,9 +9,10 @@ import IconButton from '@mui/material/IconButton';  //its a different icon layer
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import db from '../firebase'; //importing database from local firebase
 import { useStateValue } from '../context/StateProvider';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Sidebar({display, screenWidth}) {
+    const navigate = useNavigate();
     const [rooms, setRooms]= useState([]); //creating an state initialized with empty array to store all the room info fetched from database
     const [{user}]= useStateValue(); //pulling the user from datalayer, will use it to setup avatar
 
@@ -29,13 +30,20 @@ function Sidebar({display, screenWidth}) {
         }
     },[]); //it will run onlyonce everytime sidebar comp is loaded
 
-    const logout= ()=>{ window.location= '/'; }
+    const logout= ()=>{ window.location= '/'; localStorage.clear(); }
 
     const location = useLocation();
     const [pathname, setPathname] = useState(location.pathname);
     useEffect(() => {
         setPathname(location.pathname);
     }, [location]);
+
+    useEffect(()=>{
+        if(screenWidth <= 655 && (pathname === '/rooms/' || pathname === '/rooms') ){
+            navigate('/');
+        }
+        // eslint-disable-next-line
+    },[screenWidth])
 
     return (
         (screenWidth > 655 || display === "flex" || !(screenWidth <=655 && pathname !== '/'))?(

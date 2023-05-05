@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "whatsappclone749"
-  }
+    "default": "whatsappclone749",
+    "whatsappclone7842": "whatsappclone7842"
+  },
+  "targets": {},
+  "etags": {}
 }
