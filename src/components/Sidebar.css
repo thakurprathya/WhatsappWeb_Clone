@@ -90,4 +90,7 @@
 
 @media(max-width:655px) {
     .sidebar{ flex: 1; }
+    .sidebar__headerRight > .vertbutton:hover > .logout{ display: block; }
+    .logout{ position: absolute; top: 3.3rem; right: .5rem;}
+
 }
