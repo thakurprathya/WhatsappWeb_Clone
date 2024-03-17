@@ -12,12 +12,20 @@ import 'firebase/compat/firestore';
 
 //passing a prop addNewChat, we're going to render this component conditionally for prop addNewChat so that it contains some of the styling
 const SidebarChat = ({id, name, addNewChat}) => {  
-    const [seed, setSeed]= useState('');  //creating an empty state to be used for generating random avatar from the site
+    const [dp, setDp] = useState('');
     const [messages, setMessages]= useState(''); //creating an empty state to store all the messages from the chat room
     const navigate= useNavigate();
-   
+    
+    // avatar combinations
+    const baseColor = ["00acc1", "1e88e5", "5e35b1", "6d4c41", "7cb342", "8e24aa", "546e7a", "3949ab", "fdd835", "d81b60"];
+    const eyes = ["bulging", "dizzy", "eva", "frame1", "frame2", "glow", "happy", "robocop", "round", "shade01"];
+    const face = ["round01", "round02", "square01", "square02", "square03", "square04"];
+    const mouth = ["bite", "diagram", "grill01", "grill02", "grill03", "smile01", "smile02", "square01", "square02"];
+    const sides = ["antenna01", "antenna02", "cables01", "cables02", "round", "square", "squareAssymetric"];
+    const top = ["antenna", "bulb01", "horns", "radar", "pyramid"];
+
     useEffect(()=>{
-        setSeed(Math.floor(Math.random() * 5000));  //generating a random no.
+        setDp(`https://api.dicebear.com/8.x/bottts/svg?baseColor=${getRamdomIndexFromArray(baseColor)}&eyes=${getRamdomIndexFromArray(eyes)}&face=${getRamdomIndexFromArray(face)}&mouth=${getRamdomIndexFromArray(mouth)}&sides=${getRamdomIndexFromArray(sides)}&top=${getRamdomIndexFromArray(top)}`);
     },[]) //will run only whenver sidebarchat loads
 
     useEffect(()=>{
@@ -59,7 +67,12 @@ const SidebarChat = ({id, name, addNewChat}) => {
         }
     }
 
-    window.localStorage.setItem(`chatAvatar${id}`, `https://avatars.dicebear.com/api/bottts/${seed}.svg`)
+    const getRamdomIndexFromArray = (array)=>{
+        const randomIndex = Math.floor(Math.random() * array.length);
+        return array[randomIndex];
+    }
+
+    window.localStorage.setItem(`chatAvatar${id}`, dp);
 
     return !addNewChat ? (  //going to return depending upon prop addnewchat present or not
         <Link to={`/rooms/${id}`}>  {/*changing the link on clicking any chat, as it made everychat option a link to that chat*/}

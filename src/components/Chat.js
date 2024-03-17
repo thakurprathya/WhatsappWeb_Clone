@@ -73,8 +73,8 @@ function Chat({screenWidth}) {
                     </div>
                 </div>
                 <div className="chat__body">
-                    {messages.map(message=>(  //traversing each message
-                        <p className={`chat__message ${message.name === user.displayName && "chat__reciever"}`}>
+                    {messages.map( (message, index) =>(  //traversing each message
+                        <p key={index} className={`chat__message ${message.name === user.displayName && "chat__reciever"}`}>
         {/*if message name = google name then will show green layout send by us layout else white layout, but this will raise error for persons with same name so it would be better if linked this command with ids rather than just names */}
                             <span className="chat__name">{message.name}</span>
                             {message.message}
